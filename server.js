@@ -19,6 +19,7 @@ app.set("views", path.join(__dirname, 'app/views'));
 require("./app/routing/routes")(app);
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/articles', { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/articles";
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.listen(PORT, function() {console.log("Server Listening on:"+PORT)});
