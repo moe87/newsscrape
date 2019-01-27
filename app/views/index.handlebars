@@ -1,0 +1,42 @@
+<div id="latestNews" class="card-deck">
+{{#if message}}
+	<div class="card">
+			<div class="card-body">{{message.text}}</div>
+	</div>
+{{/if}}
+{{#each articles as |article|}}
+<div class="card" id="article_{{@index}}">
+	<div class="card-header"><a href="{{article.url}}">{{article.title}}</a></div>
+	<div class="card-body">{{article.summary}}</div>
+	{{#if article.saved}}
+		<div class="card-footer">
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#notes" value="{{article._id}}" id="addNoteBtn">Add Note</button>
+			<button type="button" class="btn btn-success" onclick="deleteArticle('{{article._id}}', {{@index}})">Delete Article</button>
+		</div>
+	{{else}}
+		<div class="card-footer"><button class="btn btn-success" onclick="saveArticle('{{article._id}}', {{@index}})">Save Article</button></div>
+	{{/if}}
+</div>
+{{/each}}
+</div>
+
+<div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="notesLong" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notestitle">Add Notes</h5>
+      </div>
+      <div class="modal-body">
+        <form id="notesForm">
+        	<div class="form-group">
+        		<textarea class="form-control" id="noteText" rows="3"></textarea>
+        	</div>
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	<button type="submit" class="btn btn-primary" onclick="saveNote('addNoteBtn', 'noteText')">Save changes</button>
+        </form>
+        <ul class="list-group notes-list">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
